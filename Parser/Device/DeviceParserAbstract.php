@@ -22,6 +22,8 @@ abstract class DeviceParserAbstract extends ParserAbstract
     protected $model = null;
     protected $brand = null;
 
+    public $regexModel = null;
+
     const DEVICE_TYPE_DESKTOP              = 0;
     const DEVICE_TYPE_SMARTPHONE           = 1;
     const DEVICE_TYPE_TABLET               = 2;
@@ -637,6 +639,7 @@ abstract class DeviceParserAbstract extends ParserAbstract
         foreach ($regexes as $brand => $regex) {
             $matches = $this->matchUserAgent($regex['regex']);
             if ($matches) {
+                $this->regexModel = $regex['regex'];
                 break;
             }
         }
@@ -664,9 +667,11 @@ abstract class DeviceParserAbstract extends ParserAbstract
         }
 
         if (isset($regex['models'])) {
+
             foreach ($regex['models'] as $modelRegex) {
                 $modelMatches = $this->matchUserAgent($modelRegex['regex']);
                 if ($modelMatches) {
+                    $this->regexModel = $modelRegex['regex'];
                     break;
                 }
             }

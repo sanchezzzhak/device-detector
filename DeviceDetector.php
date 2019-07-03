@@ -106,6 +106,8 @@ class DeviceDetector
      */
     protected $model = '';
 
+    protected $modelRegex = '';
+
     /**
      * Holds bot information if parsing the UA results in a bot
      * (All other information attributes will stay empty in that case)
@@ -229,6 +231,7 @@ class DeviceDetector
         $this->brand = '';
         $this->model = '';
         $this->parsed = false;
+        $this->modelRegex = '';
     }
 
     /**
@@ -549,6 +552,14 @@ class DeviceDetector
     }
 
     /**
+     * @return string
+     */
+    public function getModelRegexp()
+    {
+        return $this->modelRegex;
+    }
+
+    /**
      * Returns the bot extracted from the parsed UA
      *
      * @return array
@@ -654,6 +665,7 @@ class DeviceDetector
             $parser->setCache($this->getCache());
             $parser->setUserAgent($this->getUserAgent());
             if ($parser->parse()) {
+                $this->modelRegex = $parser->regexModel;
                 $this->device = $parser->getDeviceType();
                 $this->model = $parser->getModel();
                 $this->brand = $parser->getBrand();
@@ -787,6 +799,37 @@ class DeviceDetector
         return false;
     }
 
+    public static function getInfoFromUserAgentInfo($ua){
+        $deviceDetector = new DeviceDetector($ua);
+        $deviceDetector->parse();
+
+        if ($deviceDetector->isBot()) {
+            return array(
+                'user_agent' => $deviceDetector->getUserAgent(),
+                'bot' => $deviceDetector->getBot()
+            );
+        }
+
+        $osFamily = OperatingSystem::getOsFamily($deviceDetector->getOs('short_name'));
+        $browserFamily = Browser::getBrowserFamily($deviceDetector->getClient('short_name'));
+
+        $processed = array(
+            'model_regexp' => $deviceDetector->getModelRegexp(),
+            'user_agent' => $deviceDetector->getUserAgent(),
+            'os' => $deviceDetector->getOs(),
+            'client' => $deviceDetector->getClient(),
+            'device' => array(
+                'type' => $deviceDetector->getDeviceName(),
+                'brand' => $deviceDetector->getBrand(),
+                'model' => $deviceDetector->getModel(),
+            ),
+            'os_family' => $osFamily !== false ? $osFamily : 'Unknown',
+            'browser_family' => $browserFamily !== false ? $browserFamily : 'Unknown',
+        );
+        return $processed;
+    }
+
+
     /**
      * Parses a useragent and returns the detected data
      *
@@ -814,7 +857,7 @@ class DeviceDetector
         }
 
         $osFamily = OperatingSystem::getOsFamily($deviceDetector->getOs('short_name'));
-        $browserFamily = \DeviceDetector\Parser\Client\Browser::getBrowserFamily($deviceDetector->getClient('short_name'));
+        $browserFamily = Browser::getBrowserFamily($deviceDetector->getClient('short_name'));
 
         $processed = array(
             'user_agent' => $deviceDetector->getUserAgent(),

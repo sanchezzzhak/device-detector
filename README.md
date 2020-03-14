@@ -199,7 +199,7 @@ There are already a few ports of this tool to other languages:
 
 The lists below are auto generated and updated from time to time. Some of them might not be complete.
 
-*Last update: 2020/03/13*
+*Last update: 2020/03/14*
 
 ### List of detected operating systems:
 

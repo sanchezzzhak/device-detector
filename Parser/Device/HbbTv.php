@@ -27,27 +27,26 @@ class HbbTv extends DeviceParserAbstract
     public function parse()
     {
         // only parse user agents containing hbbtv fragment
-        if (!$this->isHbbTv()) {
+        if (!$this->isTV()) {
             return false;
         }
 
-        parent::parse();
-
         // always set device type to tv, even if no model/brand could be found
         $this->deviceType = self::DEVICE_TYPE_TV;
+        parent::parse();
 
         return true;
     }
 
     /**
-     * Returns if the parsed UA was identified as a HbbTV device
+     * Returns true if an HbbTv, Smart Tv, or Android Tv fragment is present
      *
      * @return bool
      */
-    public function isHbbTv()
+    public function isTV()
     {
-        $regex = 'HbbTV/([1-9]{1}(?:\.[0-9]{1}){1,2})';
+        $regex = '(HbbTV/(?:[1-9]{1}(?:\.[0-9]{1}){1,2})|Android[ _-]?TV|TV[ _-]?(?:BOX|SMART)|SMART[ _-]?TV)[/;) ]';
         $match = $this->matchUserAgent($regex);
-        return $match ? $match[1] : false;
+        return is_array($match) && array_key_exists(0, $match);
     }
 }

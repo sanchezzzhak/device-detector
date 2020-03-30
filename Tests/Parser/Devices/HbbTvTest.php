@@ -16,7 +16,7 @@ class HbbTvTest extends TestCase
     {
         $hbbTvParser = new HbbTv;
         $hbbTvParser->setUserAgent('Opera/9.80 (Linux mips ; U; HbbTV/1.1.1 (; Philips; ; ; ; ) CE-HTML/1.0 NETTV/3.2.1; en) Presto/2.6.33 Version/10.70');
-        $this->assertEquals($hbbTvParser->isHbbTv(), '1.1.1');
+        $this->assertEquals($hbbTvParser->isTV(), true);
     }
 
 }

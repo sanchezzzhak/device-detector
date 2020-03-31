@@ -294,3 +294,11 @@ Videoweb:
       model: '$1'
     - regex: '(videowebtv)'
       model: 'VideoWeb TV'
+
+# Daewoo
+Daewoo:
+  regex: 'Daewoo'
+  device: 'tv'
+  models:
+    - regex: 'Daewoo (Android TV 638)[);/ ]'
+      model: '$1'

@@ -13594,13 +13594,6 @@ NewsMy:
   device: 'car browser'
   model: '$1'
 
-# Daewoo
-Daewoo:
-  regex: 'Daewoo'
-  device: 'tv'
-  models:
-    - regex: 'Daewoo (Android TV 638)[);/ ]'
-      model: '$1'
 
 # Vesta
 Vesta:

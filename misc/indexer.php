@@ -16,38 +16,7 @@ Beelink SEA I
 Beelink A1
 */
 
-class ParserAST
-{
-    public $source;
-    public $pos = 0;
 
-    public function __construct($source)
-    {
-        $this->source = $source;
-    }
-
-    public function parse()
-    {
-        $this->parseDisjunction();
-
-
-        return [];
-    }
-
-    private function next($value)
-    {
-        return $this->source[$this->pos + 1] === $value;
-    }
-
-
-    private function parseDisjunction()
-    {
-        $result = [];
-        $pos = 0;
-    }
-
-
-}
 
 class DeviceIndexer
 {
@@ -80,7 +49,7 @@ class DeviceIndexer
 //$indexer = new DeviceIndexer();
 //$indexer->build();
 
-$parser = new ParserAST('Beelink (GT1|LAKE I|SEA I|A1)[);\/ ]');
+$parser = new RegexParserAST('Beelink (GT1|LAKE I|SEA I|A1)[);\/ ]');
 $ast = $parser->parse();
 
 var_dump($ast);

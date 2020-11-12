@@ -3807,3 +3807,9 @@
     name: theoldreader
     category: Feed Reader
     url: https://theoldreader.com
+-
+  user_agent: Mozilla/5.0 (compatible; Plukkie/1.7; http://www.botje.com/plukkie.htm)
+  bot:
+    name: Plukkie
+    category: Crawler
+    url: http://www.botje.com/plukkie.htm

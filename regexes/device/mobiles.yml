@@ -18675,6 +18675,17 @@ BioRugged:
     - regex: 'Ruggbo 20 Lite'
       model: 'Ruggbo 20 Lite'
 
+# Glofiish (glofiish.ua)
+Glofiish:
+  regex: 'Glofiish[ _]|Gpad_U(?:[);/ ]|$)'
+  device: 'smartphone'
+  models:
+    - regex: 'Gpad_U(?:[);/ ]|$)'
+      model: 'G Pad U'
+    - regex: 'Glofiish (X700)(?:[);/ ]|$)'
+      device: 'tablet'
+      model: '$1'
+
 # Leff
 Leff:
   regex: 'Leff Shell (?:HV320WHB-N55|LC390TA2A)(?:[);/ ]|$)'

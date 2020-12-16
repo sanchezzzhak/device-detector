@@ -310,6 +310,7 @@ abstract class AbstractDeviceParser extends AbstractParser
         'GS' => 'Gigaset',
         'GZ' => 'Ginzzu',
         'G4' => 'Globex',
+        'GF' => 'Glofiish',
         'GC' => 'GOCLEVER',
         'GL' => 'Goly',
         'GO' => 'Google',

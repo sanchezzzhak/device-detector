@@ -1485,25 +1485,68 @@ abstract class AbstractDeviceParser extends AbstractParser
         parent::setUserAgent($userAgent);
     }
 
+
+    protected function getRegexesForBrand(string $brand): ?array
+    {
+        return $this->getRegexes()[$brand] ?? null;
+    }
+
+    protected function parseDeviceForClientHints(): ?array
+    {
+        if ($this->clientHints && $this->clientHints->getModel()) {
+            return [
+                'deviceType' => null,
+                'model'      => $this->clientHints->getModel(),
+                'brand'      => '',
+            ];
+        }
+
+        return null;
+    }
+
+    protected function parseDeviceCodeForUserAgent(): ?string
+    {
+        return null;
+    }
+
+    protected function getBrandsForDeviceCode(string $deviceCode): array
+    {
+
+    }
+
+
     /**
      * @inheritdoc
      */
     public function parse(): ?array
     {
+        $resultClientHints  = $this->parseDeviceForClientHints();
+        $resultDeviceCode   = $this->parseDeviceCodeForUserAgent();
+        $hasClientHintModel = '' !== ($resultClientHints['model'] ?? '');
 
-        $isDesktop = (
-            $this->matchUserAgent('(?:Windows (?:NT|IoT)|X11; Linux x86_64)') &&
-            !$this->matchUserAgent('^.+Mozilla/|Android|Tablet|Mobile|iPhone|Windows Phone') &&
-            !$this->matchUserAgent('Lenovo|compatible; MSIE|Trident/|Tesla/|XBOX|FBMD/|ARM; ?([^)]+)')
-        );
+        if (!$hasClientHintModel) {
+            $isDesktop = (
+                $this->matchUserAgent('(?:Windows (?:NT|IoT)|X11; Linux x86_64)') &&
+                !$this->matchUserAgent('^.+Mozilla/|Android|Tablet|Mobile|iPhone|Windows Phone') &&
+                !$this->matchUserAgent('Lenovo|compatible; MSIE|Trident/|Tesla/|XBOX|FBMD/|ARM; ?([^)]+)')
+            );
 
-        if ($isDesktop) {
-            return $this->getResult();
+            if ($isDesktop) {
+                return $this->getResult();
+            }
         }
+
+        $brands = [];
+        if (null !== $resultDeviceCode) {
+            $brands = $this->getBrandsForDeviceCode($resultDeviceCode);
+        }
+
+
+
+
 
         $brand   = '';
         $regexes = $this->getRegexes();
-
         foreach ($regexes as $brand => $regex) {
             $matches = $this->matchUserAgent($regex['regex']);
 
@@ -1513,15 +1556,6 @@ abstract class AbstractDeviceParser extends AbstractParser
         }
 
         if (empty($matches)) {
-            if ($this->clientHints && $this->clientHints->getModel()) {
-                return [
-                    'deviceType' => null,
-                    'model'      => $this->clientHints->getModel(),
-                    'brand'      => '',
-                ];
-            }
-
-            return null;
         }
 
         if ('Unknown' !== $brand) {

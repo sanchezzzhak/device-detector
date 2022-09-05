@@ -412,4 +412,47 @@ abstract class AbstractParser
         return \str_replace(' ', '', \strtolower($value1)) ===
             \str_replace(' ', '', \strtolower($value2));
     }
+
+    /**
+     * parse ans split agentagent into tokens strings
+     *
+     * @param string $userAgent
+     * @return array
+     */
+    protected function getTokensForUserAgent(string $userAgent): array
+    {
+        return \preg_split('/ (?!; ]+)/i', $userAgent);
+    }
+
+    public function getGroupForUserAgentTokens(array $tokens): array
+    {
+        $groupIndex = 0;
+        return \array_reduce($tokens, function ($group, $token) use (&$groupIndex) {
+
+            if (\preg_match('/^\((.*)\)$/', $token, $match)) {
+                $group['#' . $groupIndex++] = \preg_split('/[;,] /', $match[1]);
+                return $group;
+            }
+
+            $rowSlash = \explode('/', $token);
+            if (\count($rowSlash) === 2) {
+                $group[$rowSlash[0]] = $rowSlash[1];
+                return $group;
+            }
+
+            $group['#' . $groupIndex++] = $token;
+            return $group;
+        }, []);
+    }
+
+
+    public function parseUserAgent(): array
+    {
+        $tokens = $this->getTokensForUserAgent($this->userAgent);
+        $groups = $this->getGroupForUserAgentTokens($tokens);
+
+        return compact('tokens', 'groups');
+    }
+
+
 }

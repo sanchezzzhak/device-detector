@@ -41,9 +41,9 @@ class DataPacker
             return [];
         }
         $result = [];
-        foreach ($matches as $match) {
-            $short = $match[1];
-            $value = $match[2] ?? '';
+        for ($i =0, $l = count($matches[0]); $i < $l; $i++) {
+            $short = $matches[1][$i];
+            $value = $matches[2][$i];
             $path = $shortKeyMap[$short] ?? null;
             if (null !== $path) {
                 ArrayPath::set($result, $path, $value);

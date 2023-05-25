@@ -44,7 +44,7 @@ class ArrayPath
     /**
      * array setter
      *
-     * @param array $data
+     * @param array $array
      * @param $path
      * @param $value
      * ```
@@ -55,24 +55,24 @@ class ArrayPath
      * ArrayPath::set($array, 'key', 'val');
      * ```
      */
-    public static function set(array &$data, $path, $value): void
+    public static function set(array &$array, $path, $value): void
     {
         if ($path === null) {
-            $data = $value;
+            $array = $value;
             return;
         }
         $keys = is_array($path) ? $path : explode('.', $path);
         while (count($keys) > 1) {
             $key = array_shift($keys);
-            if (!isset($data[$key])) {
-                $data[$key] = [];
+            if (!isset($array[$key])) {
+                $array[$key] = [];
             }
-            if (!is_array($data[$key])) {
-                $data[$key] = [$data[$key]];
+            if (!is_array($array[$key])) {
+                $array[$key] = [$array[$key]];
             }
-            $data = &$data[$key];
+            $array = &$array[$key];
         }
-        $data[array_shift($keys)] = $value;
+        $array[array_shift($keys)] = $value;
     }
 
     public static function map($array, $from, $to, $group = null): array

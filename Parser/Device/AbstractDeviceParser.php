@@ -1845,9 +1845,14 @@ abstract class AbstractDeviceParser extends AbstractParser
 
         foreach ($regexes as $brand => $regex) {
             $matches = $this->matchUserAgent($regex['regex']);
-
             if ($matches) {
                 break;
+            }
+            if (null === $matches && \array_key_exists('iregex', $regex)) {
+                $matches = $this->matchUserAgent($regex['iregex'], '');
+                if ($matches) {
+                    break;
+                }
             }
         }
 

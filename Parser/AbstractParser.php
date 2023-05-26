@@ -292,17 +292,20 @@ abstract class AbstractParser
      * Matches the useragent against the given regex
      *
      * @param string $regex
-     *
-     * @return ?array
+     * @param string $flags
+     * @return array|null ?array
      *
      * @throws \Exception
      */
-    protected function matchUserAgent(string $regex): ?array
+    protected function matchUserAgent(string $regex, string $flags = 'i'): ?array
     {
         $matches = [];
 
         // only match if useragent begins with given regex or there is no letter before it
-        $regex = '/(?:^|[^A-Z0-9\-_]|[^A-Z0-9\-]_|sprd-|MZ-)(?:' . \str_replace('/', '\/', $regex) . ')/i';
+        $regex = '/(?:^|[^A-Z0-9\-_]|[^A-Z0-9\-]_|sprd-|MZ-)(?:'
+            . \str_replace('/', '\/', $regex)
+            . ')/'
+            . $flags;
 
         try {
             if (\preg_match($regex, $this->userAgent, $matches)) {

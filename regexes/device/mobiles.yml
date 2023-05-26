@@ -27377,6 +27377,7 @@ Boost:
 # Highscreen
 Highscreen:
   regex: 'HIGHSCREEN|(Easy[- ]Power(?:[- ]Pro)?|Pure[_ ](?:Power|F)|Power Ice(?: Max)?|Easy[_ ]([SFL]|XL)(?:_Pro)?|Razar_Pro|Power Rage(?: Evo)?|Zera-S-Power|Zera[ _][UFS]|Power[ _]?Five[ _]?(?:Pro|Evo|Max|Max(?:Lite|2))|Power(?:Four|Five)|BOOST II(?:se)?|Fest(?:XL)?(?:-Pro)?|Tasty|Boost3|Boost 3(?: Pro)? SE|Expanse|Hercules|Alpha Rage|VergeM|Ice2|Prime [LS]|Spade|Spark 2|Alpha GT[RX]|Wallet|Thunder|Razar|COSMO DUO|Prime Mini SE| Bay)(?:[);/ ]|$)'
+  iregex: '(?:Android 9;(?: [\w-]+;)? Max3)(?:[);/ ]|$)'
   device: 'smartphone'
   models:
     - regex: '(Power Ice(?:[ ](?:Max|Evo))?|Power Rage(?: Evo)?|Zera[ _][UFS]|Alpha GT[RX]|Wallet)(?:[);/ ]|$)'
@@ -27459,6 +27460,8 @@ Highscreen:
       model: 'Prime $1'
     - regex: 'COSMO DUO'
       model: 'Cosmo Duo'
+    - regex: 'Max3(?:[);/ ]|$)'
+      model: 'Max 3'
 
 # CVTE
 CVTE:
@@ -31293,10 +31296,11 @@ Eagle:
 
 # Invens
 Invens:
-  regex: '(?:Diamond D[56]|Fighter|Eager|Royal R[1-8]|Android 9(?:[\d.]*);(?: [\w-]+;)? (?:MAX[89]|MAX_2))(?: Build|[;)])'
+  regex: '(?:Diamond D[56]|Fighter|Eager|Royal R[1-8]|Android 9(?:[\d.]*);(?: [\w-]+;)? (?:MAX[589]|MAX_2))(?: Build|[;)])'
+  iregex: '(?:Android 9;(?: [\w-]+;)? MAX3)(?:[);/ ]|$)'
   device: 'smartphone'
   models:
-    - regex: 'MAX[_ ]?([89]|2)(?:[);/ ]|$)'
+    - regex: 'MAX[_ ]?([23589])(?:[);/ ]|$)'
       model: 'Max $1'
     - regex: '(Fighter|Eager|Royal R[1-8]|Diamond D[56])'
       model: '$1'

@@ -43,7 +43,7 @@ class DeviceDetectorTest extends TestCase
 
     public function testDevicesYmlFiles(): void
     {
-        $allowedKeys  = ['regex', 'device', 'models', 'model', 'brand'];
+        $allowedKeys  = ['iregex', 'regex', 'device', 'models', 'model', 'brand'];
         $fixtureFiles = \glob(\realpath(__DIR__) . '/../regexes/device/*.yml');
 
         foreach ($fixtureFiles as $file) {

@@ -1590,6 +1590,7 @@ abstract class AbstractDeviceParser extends AbstractParser
         'ROC' => 'Roam Cat',
         'ROT' => 'Rocket',
         'R1'  => 'Rokit',
+        'RKI' => 'Rokid',
         'RK'  => 'Roku',
         'R3'  => 'Rombica',
         'RUA' => 'Romsat',
